@@ -14,9 +14,8 @@ async function handleRequest(request) {
   modifiedHeaders.set("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1");
 
   let baseUrl = new URL(request.url).origin;
-  let proxyUrl = new URL(request.url).searchParams.get("url");
-  console.log(proxyUrl);
-
+  let proxyUrl = new URL(request.url).href.replaceAll(`${baseUrl}/`,"")
+  
   // Check if the path is empty
   if (!proxyUrl) {
     let htmlResponse = `
@@ -84,10 +83,10 @@ async function handleRequest(request) {
                 The CORS Proxy is working perfectly!
             </div>
             <div class="text">
-                Usage: ${baseUrl}/?url={YourApiUrl}
+                Usage: ${baseUrl}/{YourApiUrl}
             </div>
             <div class="text">
-                Example: ${baseUrl}/?url=https://gorest.co.in/public/v2/users
+                Example: ${baseUrl}/https://gorest.co.in/public/v2/users
             </div>
         </body>
         </html>`;
