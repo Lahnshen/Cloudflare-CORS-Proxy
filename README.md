@@ -4,6 +4,6 @@ Simply copy the [`index.js`](https://github.com/Lahnshen/CORS-Image-Proxy-Cloudf
 
 You can use the proxy with:
 ```
-https://your.proxy.workers.dev/url=https://yourapi.com
+https://your.proxy.workers.dev/https://yourapi.com
 ```
 
