@@ -111,6 +111,20 @@ async function handleRequest(request) {
 
   let response = await fetch(modifiedRequest);
 
+  // Support for redirected response
+  if ([301, 302].includes(response.status)) {
+    const redirectedUrl = response.headers.get('location')
+    if (redirectedUrl) {
+      const newModifiedRequest = new Request(`${baseUrl}/${redirectedUrl}`, {
+        method: request.method,
+        headers: modifiedHeaders,
+        body: request.body,
+        redirect: "manual", // Prevent following redirects
+      });
+      return handleRequest(newModifiedRequest)
+    }
+  }
+
   let newResponseHeaders = new Headers(response.headers);
   newResponseHeaders.set("Access-Control-Allow-Origin", "*");
   newResponseHeaders.set(
